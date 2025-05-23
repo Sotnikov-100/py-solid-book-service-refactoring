@@ -80,6 +80,8 @@ def main(book: Book, commands: list[tuple[str, str]]) -> str | None:
         "xml": XmlSerializer(),
     }
 
+    result = None
+
     for command, method_type in commands:
         if command == "display":
             strategy = display_strategies.get(method_type)
@@ -97,9 +99,9 @@ def main(book: Book, commands: list[tuple[str, str]]) -> str | None:
             strategy = serializer_strategies.get(method_type)
             if not strategy:
                 raise ValueError(f"Unknown serialize type: {method_type}")
-            return strategy.serialize(book)
+            result = strategy.serialize(book)
 
-    return None
+    return result
 
 
 if __name__ == "__main__":
